@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Abstractions;
 using Microsoft.Net.Http.Headers;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ using xpertalwebapp.Models;
 
 namespace xpertalwebapp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -32,6 +34,13 @@ namespace xpertalwebapp.Controllers
         {
             return View();
         }
+
+        public IActionResult Salir()
+        {
+            return View();
+        }
+
+
 
         public async Task<IActionResult> PedirAPI()
         {

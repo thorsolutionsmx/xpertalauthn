@@ -1,8 +1,26 @@
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration _config = builder.Configuration;
 
+builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+    .AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd"));
+//    EnableTokenAcquisitionToCallDownstreamApi().AddInMemoryTokenCaches();
+
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.FallbackPolicy = options.DefaultPolicy;
+//});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages()
+    .AddMicrosoftIdentityUI();
+
+
+
 
 builder.Services.AddHttpClient("ApiProtegida", httpClient =>
 {
@@ -31,6 +49,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
