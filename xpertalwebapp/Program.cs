@@ -1,7 +1,17 @@
 var builder = WebApplication.CreateBuilder(args);
+IConfiguration _config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddHttpClient("ApiProtegida", httpClient =>
+{
+    httpClient.BaseAddress = new Uri(_config.GetValue<string>("ApiAd:urlapi"));
+    httpClient.DefaultRequestHeaders.Add(
+        "x-header-app", "webdemo");
+});
+
+
 
 var app = builder.Build();
 
@@ -12,6 +22,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -1,4 +1,4 @@
-namespace xpertalapi
+namespace xpertalModels
 {
     public class WeatherForecast
     {
