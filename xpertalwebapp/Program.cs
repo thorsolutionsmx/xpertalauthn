@@ -1,13 +1,15 @@
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using static System.Formats.Asn1.AsnWriter;
 
 var builder = WebApplication.CreateBuilder(args);
 IConfiguration _config = builder.Configuration;
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd")).
-    EnableTokenAcquisitionToCallDownstreamApi().AddInMemoryTokenCaches();
+    EnableTokenAcquisitionToCallDownstreamApi(new[] { "https://ocag547outlook.onmicrosoft.com/MyWebApi/miotropermiso" }).
+    AddInMemoryTokenCaches();
 
 //builder.Services.AddAuthorization(options =>
 //{
