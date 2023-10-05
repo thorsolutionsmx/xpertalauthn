@@ -18,10 +18,37 @@ IConfiguration _config = builder.Configuration;
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApi(_config.GetSection("AzureAd"));
-    //    .AddJwtBearer( o =>   _config.Bind("AzureAd", o));
 
 
-
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("permisoweather", p =>
+    {
+        p.RequireAssertion(c => c.User.HasClaim(o =>
+                                {
+                                    bool _result = false;
+                                    if (o.Type == "http://schemas.microsoft.com/identity/claims/scope")
+                                    {
+                                        string[] _valores = o.Value.Split(' ');
+                                        _result = _valores.Contains("miotropermiso");
+                                    }
+                                    return _result;
+                                }));
+    });
+    o.AddPolicy("permisototal", p =>
+    {
+        p.RequireAssertion(c => c.User.HasClaim(o =>
+        {
+            bool _result = false;
+            if (o.Type == "http://schemas.microsoft.com/identity/claims/scope")
+            {
+                string[] _valores = o.Value.Split(' ');
+                _result = _valores.Contains("mipermiso") && _valores.Contains("minadapermiso");
+            }
+            return _result;
+        }));
+    });
+});
 
 var app = builder.Build();
 

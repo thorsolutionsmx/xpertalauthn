@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 using xpertalModels;
 
 namespace xpertalapi.Controllers
@@ -21,7 +22,8 @@ namespace xpertalapi.Controllers
         }
 
 
-        [Authorize]
+        [Authorize(policy: "permisototal")]
+//        [RequiredScope(RequiredScopesConfigurationKey = "Permisos:minadapermiso")]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

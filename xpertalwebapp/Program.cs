@@ -8,7 +8,7 @@ IConfiguration _config = builder.Configuration;
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd")).
-    EnableTokenAcquisitionToCallDownstreamApi(new[] { "https://ocag547outlook.onmicrosoft.com/MyWebApi/miotropermiso" }).
+    EnableTokenAcquisitionToCallDownstreamApi(_config.GetSection("AzureAd:Scopes").Get<IEnumerable<string>>()).
     AddInMemoryTokenCaches();
 
 //builder.Services.AddAuthorization(options =>

@@ -85,8 +85,8 @@ namespace xpertalwebapp.Controllers
         private async Task<string> ClienteSeguridad()
         {
             string Resultado = "No hay resultado";
-            var scope = _config.GetValue<string>("AzureAd:Scopes");
-            var accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync(new[] { scope });
+            var scope = _config.GetSection("AzureAd:Scopes").Get<IEnumerable<string>>();
+            var accessToken = await _tokenAcquisition.GetAccessTokenForUserAsync( scope );
             var httpRequestMessage = new HttpRequestMessage(
           HttpMethod.Get,
           "/WeatherForecast");
