@@ -8,13 +8,38 @@ IConfiguration _config = builder.Configuration;
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd")).
-    EnableTokenAcquisitionToCallDownstreamApi(_config.GetSection("AzureAd:Scopes").Get<IEnumerable<string>>()).
+    EnableTokenAcquisitionToCallDownstreamApi(_config.GetSection("AzureAd:Scopes").Get<IEnumerable<string>>())
+    .AddDownstreamApi("ApiProtegida", _config.GetSection("ApiAd")).
     AddInMemoryTokenCaches();
 
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.FallbackPolicy = options.DefaultPolicy;
-//});
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("permisooperativos", p =>
+    {
+        p.RequireAssertion(c => c.User.HasClaim(o =>
+        {
+            bool _result = false;
+            if (o.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role")
+            {
+                _result = o.Value == "";
+            }
+            return _result;
+        }));
+    });
+    o.AddPolicy("numempleado", p =>
+    {
+        p.RequireAssertion(c => c.User.HasClaim(o =>
+        {
+            bool _result = false;
+            if (o.Type == "EmployeeID")
+            {
+                _result = true;
+            }
+            return _result;
+        }));
+    });
+});
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -24,12 +49,12 @@ builder.Services.AddRazorPages()
 
 
 
-builder.Services.AddHttpClient("ApiProtegida", httpClient =>
-{
-    httpClient.BaseAddress = new Uri(_config.GetValue<string>("ApiAd:urlapi"));
-    httpClient.DefaultRequestHeaders.Add(
-        "x-header-app", "webdemo");
-});
+//builder.Services.AddHttpClient("ApiProtegida", httpClient =>
+//{
+//    httpClient.BaseAddress = new Uri(_config.GetValue<string>("ApiAd:urlapi"));
+//    httpClient.DefaultRequestHeaders.Add(
+//        "x-header-app", "webdemo");
+//});
 
 
 

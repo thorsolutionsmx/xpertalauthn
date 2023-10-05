@@ -22,7 +22,7 @@ namespace xpertalapi.Controllers
         }
 
 
-        [Authorize(policy: "permisototal")]
+        [Authorize(policy: "permisoweather")]
 //        [RequiredScope(RequiredScopesConfigurationKey = "Permisos:minadapermiso")]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
