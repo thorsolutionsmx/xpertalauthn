@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 IConfiguration _config = builder.Configuration;
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd"));
-//    EnableTokenAcquisitionToCallDownstreamApi().AddInMemoryTokenCaches();
+    .AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd")).
+    EnableTokenAcquisitionToCallDownstreamApi().AddInMemoryTokenCaches();
 
 //builder.Services.AddAuthorization(options =>
 //{
