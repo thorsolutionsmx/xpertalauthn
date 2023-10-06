@@ -12,4 +12,8 @@
     <PackageReference Include="Microsoft.Identity.Web.UI" Version="2.14.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\xpertaloxxomodels\xpertaloxxomodels.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using xpertaloxxomodels;
 
 namespace xpertalapi.Controllers
 {
