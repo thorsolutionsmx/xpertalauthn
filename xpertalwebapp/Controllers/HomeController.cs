@@ -38,7 +38,7 @@ namespace xpertalwebapp.Controllers
         }
 
 
-
+        [Authorize(Roles = "jefefinanzas")]
         public async Task< IActionResult> LlamaApi()
         {
             ViewBag.ResultadoApi = await ClienteTradicional();
