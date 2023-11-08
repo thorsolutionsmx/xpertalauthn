@@ -6,6 +6,7 @@ using xpertaloxxomodels;
 namespace xpertalapi.Controllers
 {
     [Authorize]
+    [RequiredScope("leerdatosfinanzas")]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase
@@ -22,7 +23,7 @@ namespace xpertalapi.Controllers
             _logger = logger;
         }
 
-        [RequiredScope("api://xpertalapifinanzas/leerdatoscontabilidad")]
+    
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

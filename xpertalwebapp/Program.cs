@@ -7,8 +7,8 @@ IConfiguration _config = builder.Configuration;
 
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme).
     AddMicrosoftIdentityWebApp(_config.GetSection("AzureAd")).
-    EnableTokenAcquisitionToCallDownstreamApi(new[] { _config.GetValue<string>("AzureAd:Scopes") }).
-    AddInMemoryTokenCaches();
+    EnableTokenAcquisitionToCallDownstreamApi(new[] { _config.GetValue<string>("AzureAd:Scopes") })
+    .AddInMemoryTokenCaches();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

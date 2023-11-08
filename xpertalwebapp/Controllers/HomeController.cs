@@ -74,6 +74,7 @@ namespace xpertalwebapp.Controllers
 
             var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
+            
             if (httpResponseMessage.IsSuccessStatusCode)
             {
                 using var contentStream =
